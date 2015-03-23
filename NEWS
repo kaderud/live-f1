@@ -1,0 +1,81 @@
+0.2.11 2011-03-27  "High Definition"
+
+	* More prominent display of track status.
+
+	* Show number of laps remaining during the race.
+
+	* Added display of Fastest Lap information during the race.
+
+	* Added display of Weather information.
+
+	* Automatic recovery from authentication and decryption failures.
+
+	* Added a man page.
+
+0.2.10 2010-05-11
+
+	* New Maintainer: Dave Pusey <dave@puseyuk.co.uk>
+
+	* Fixed Bug #537422: Updated URL to Live Timing registration in src/cfgfile.c
+
+	* Fixed Bug #548545: Clock is no longer paused during Practice red flag.
+
+	* Fixed Bug #555172: Undid revision 91, restoring Sector 2, Sector 3, and Pit Stops columns.
+
+	* Fixed Bug #560120: Linker error when compiling on MacOS X.
+
+	* Added leading zeros to clock display.
+
+	* Corrected Practice and Qualifying "Laps" column to "Lap", as it displays
+	the lap number the car is currently on, not the number of laps completed.
+	This can be seen when a car leaves the pit lane on its installation lap, as
+	the column immediately changes to 1, indicating the first lap for that car.
+
+0.2.9  2010-03-14  "Don't Stop Believin'"
+
+	* Fixed Bug #537214: Updated URL to Login Server.
+
+	* Fixed Bug #537422: Updated URL to Live Timing registration.
+
+	* Fixed Bug #538695: Rearranged columns on the race timing screen
+	to match the new timing format.
+
+	* Add one to the lap number, the lap in the timing columns is the
+	"just completed" lap - we want the lap in the top right to be the
+	*current* lap.
+
+	* Hide the header when displaying on a 24-line terminal, so we can
+	display all 24 cars.
+
+0.2.8  2009-05-17  "The Chain"
+
+       * Fixed Bug #374433: Updated URL to Live Timing registration.
+
+       * Fixed Bug #374457: Write past end of array
+
+0.2.7  2007-03-15  "Super Aguri"
+
+	* Update digest of secure web server SSL certificate.
+
+0.2.6  2006-07-02  "Need for Speed"
+
+	* Fixed Bug #44664; cause of occasional startup failure with the
+        "key frame request failed: 200 OK" message.
+
+	* Document the HACKING and ship the PROTOCOL files.
+
+0.2.5  2006-03-16  "Lift me up"
+
+	* Fixed Bug #34327: now compiles with libneon25.
+
+	* Support for the new knock-out qualifying format is added.
+
+	* Authorisation and the decryption cookie are now obtained
+	from the secure web server.
+
+	* Remaining time countdown is stopped during a red flag.
+
+0.2.0  2006-03-07  "Let's get it started"
+
+	* Initial public release.
+

@@ -1,0 +1,746 @@
+2011-03-27  Dave Pusey  <dave@puseyuk.co.uk>
+
+	* NEWS: Release 0.2.11
+
+	* Completely stripped out the SSL code. It was disabled in 0.2.10 due to an intermittent hanging
+	  problem, and is now seeming to cause "Server certificate verification failed: issuer is not
+	  trusted" errors even though it is disabled.
+
+2010-11-10  Dave Pusey  <dave@puseyuk.co.uk>
+
+	* Added display of Fastest Lap information during the race.
+
+	* Show number of laps remaining, instead of laps completed. This is something i've missed since
+	  this year's new FOM TV graphics. It also seems pointless to duplicate something that is already
+	  shown on the TV, and in the race leader's "Int" column.
+
+2010-07-12  Dave Pusey  <dave@puseyuk.co.uk>
+
+	* Auto retry if obtain_auth_cookie fails.
+
+	* Auto recovery from decryption failure.
+
+	* Added display of Weather information.
+
+2010-06-11  Dave Pusey  <dave@puseyuk.co.uk>
+
+	* Fixed Bug #587493: Handle system messages that begin with "img:".
+
+2010-05-26  Dave Pusey  <dave@puseyuk.co.uk>
+
+	* Fixed Bug #580064: libintl error when compiling on MacOS X.
+
+	* More prominent display of track status.
+
+	* Fixed Bug #581680: Added a man page for live-f1.
+
+	* Fixed Bug #355797: Handle system packet type 5.
+
+2010-05-11  Dave Pusey  <dave@puseyuk.co.uk>
+
+	* NEWS: Release 0.2.10
+
+	* New Maintainer: Dave Pusey <dave@puseyuk.co.uk>
+
+	* Fixed Bug #537422: Updated URL to Live Timing registration in src/cfgfile.c
+
+	* Fixed Bug #548545: Clock is no longer paused during Practice red flag.
+
+	* Fixed Bug #555172: Undid revision 91, restoring Sector 2, Sector 3, and Pit Stops columns.
+
+	* Fixed Bug #560120: Linker error when compiling on MacOS X.
+
+	* Added leading zeros to clock display.
+
+	* Corrected Practice and Qualifying "Laps" column to "Lap", as it displays
+	the lap number the car is currently on, not the number of laps completed.
+	This can be seen when a car leaves the pit lane on its installation lap, as
+	the column immediately changes to 1, indicating the first lap for that car.
+
+2010-03-14  Scott James Remnant  <scott@netsplit.com>
+
+	* NEWS: Release 0.2.9
+
+	* src/display.c (clear_board, _update_cell, clear_car): Since we
+	have 24 cars now, and the usual xterm height is 24 characters, hide
+	the header so we have room.
+
+	* src/http.c (obtain_auth_cookie): Don't destroy the session to the
+	SSL server, this causes a hang of a few minutes on my laptop :-(
+
+	* src/packet.c (handle_car_packet): The lap number in the top-right
+	was one out, because the lap in the timing feed is the lap the
+	leading car just completed rather than the lap it is currently on.
+	I don't know whether this is a change for this year, or whether it's
+	always been wrong and I've just never noticed.
+
+	* src/packet.h: Update the enums so they all have numbers, now I
+	can record a timing stream in decoded format (with 0.3.0, coming soon!)
+	it helps figure out the rest of the packets.
+
+	* src/packet.h (RaceAtomType): With the changes to pit stops this
+	year, they've dropped the columns between the sector times for
+	each of the pit stop times.  Instead it seems that the pit stop
+	time appears in the new Sector 3 column (old Sector 2 column).
+	* src/display.c (_update_cell): Increase the amount of space
+	available for sector times, just in case they increase it.
+
+	* NEWS: Update.
+
+	* README: Update registration URL
+
+2010-03-13  Scott James Remnant  <scott@netsplit.com>
+
+	* configure.ac: Bump version to 0.2.9.
+	Update copyright year.
+	Change bug reporting address to the correct URL.
+	* src/main.c (print_version): Update copyright year.
+
+2010-03-11  Scott James Remnant  <scott@netsplit.com>
+
+	* src/http.c (LOGIN_URL, REGISTER_URL): Update URLs
+
+2009-05-17  Scott James Remnant  <scott@netsplit.com>
+
+	* configure.ac: Bump version to 0.2.8.  Update copyright year.
+	* src/main.c (print_version): Update copyright year
+
+	* src/main.c (info): Don't write past the end of the buffer,
+	instead write to the last element.
+
+	* README: Update URL to Live Timing registration on formula1.com
+
+2007-03-15  Scott James Remnant  <scott@netsplit.com>
+
+	* configure.ac: Bump version to 0.2.7.
+	* NEWS: Update.
+
+	* src/http.c (CERT_DIGEST): The digest of the certificate appears
+	to have changed; update to the new login cert.
+
+2006-07-02  Scott James Remnant  <scott@netsplit.com>
+
+	* configure.ac: Bump version to 0.2.6.
+	* NEWS: Update.
+
+	* src/stream.c (parse_stream_block): Change return type to int
+	so that we can return zero, needed for when called as a neon
+	block callback.
+	* src/stream.h: Update prototype.
+
+	* Makefile.am (EXTRA_DIST): Ship PROTOCOL file.
+
+2006-05-14  Scott James Remnant  <scott@netsplit.com>
+
+	* src/display.c (clear_board): Correct typo (Pediod -> Period).
+
+	* README: Document the HACKING file, despite being standard for
+	a while now; some people are still relying on Debian's backward
+	auto* installation (including Ubuntu ... must fix that in edgy).
+
+2006-03-16  Scott James Remnant  <scott@netsplit.com>
+
+	* configure.ac: Bump version to 0.2.5.
+	* NEWS: Update.
+
+	* src/display.c (_update_time): Halt the remaining time countdown
+	while under a red flag.
+
+	* src/cfgfile.c (fgets_alloc): Restore to pristine libnih function.
+	(get_config): Move termios code here and clean up, I could swear
+	I've done this before; wonder what happened to that.
+
+	* HACKING: Add a file for people who wish to hack on live-f1.
+	* Makefile.am: Ship the HACKING file.
+
+	* README: Write a new proper README that gives the dependencies and
+	usage information.
+
+	* README: Rename to PROTOCOL.
+	* PROTOCOL: Mention the new secure host and change the examples
+	to match.
+
+	* configure.ac: Check for ne_has_support() and ne_get_response_header()
+	functions in libneon, these are new with 0.25 and replace functions
+	from 0.24 we were using.  Support both rather than dropping 0.24
+	support.
+	* src/main.c (main): Use ne_has_support() if that function exists,
+	instead of ne_supports_ssl.
+	* src/http.c (obtain_auth_cookie): If neon 0.25 is being used, get
+	the cookie header after the request rather than setting up a handler.
+	(parse_key_body): Change return type to int and return zero to
+	indicate success.
+
+	* src/live-f1.h (CurrentState): Add new auth_host member.
+	(DEFAULT_AUTH_HOST): Define the name of the default auth_host.
+	* src/main.c (main): Initialise the auth_host member, if neon
+	supports SSL use it instead of the ordinary host.
+	* src/cfgfile.c (read_config): Parse the auth-host directive.
+	* src/http.c (obtain_auth_cookie): Add new ssl argument and use
+	https and port 443 if TRUE.  Display an error if we failed to
+	obtain a cookie from the server.
+	(check_auth_cert): Check the identity and fingerprint of the SSL
+	certificate; not really secure, but it'll do for now.
+	* src/http.h: Update.
+	* TODO: Update.
+
+2006-03-11  Scott James Remnant  <scott@netsplit.com>
+
+	* src/live-f1.h (EventType): Qualifying has changed to event
+	type 3 this year.
+	* src/packet.h (QualifyingAtomType): Also has its own headers and
+	doesn't just reuse the practice ones; seems to be three columns
+	for the period times, and the usual three sector columns.
+	* src/display.c (clear_board): Write different headers out.
+	(_update_cell): Handle the new qualy table format.
+	(TextColour): Add new "eliminated" colour used after people have
+	been knocked out of qualifying, otherwise we end up leaking into
+	our own colours.
+	(open_display): Define eliminated colour.
+
+	* src/cfgfile.c: Include unistd.h for definition of close().
+
+2006-03-07  Scott James Remnant  <scott@netsplit.com>
+
+	* configure.ac: Bump version to 0.2.0, we'll make a release now
+	for the Bahrain practice sessions and update it as we go.
+	* NEWS: Update.
+	* TODO: Mention that we want a proper state engine.
+
+	* src/main.c (print_version): Update copyright year as this is the
+	printed version.
+
+	* src/display.c (clear_board): Increase default number of
+	cars to 22, to give enough room for Super Aguri; it doesn't make
+	any real difference (the table size gets increased anyway) but is
+	a little more efficient.  If we get a 12th team, it's time to switch
+	to that GTK+ UI as there aren't any more terminal lines left.
+
+2005-10-15  Scott James Remnant  <scott@netsplit.com>
+
+	* TODO: Added notes of what I want fixed before release.
+
+	* src/main.c (main): Reset the state structure after connecting
+	to the stream, clearing out any previous event information so we
+	come at the new data fresh.
+	* src/packet.c (handle_system_packet): Reset the flag to green
+	at the start of a new event.
+
+	* src/stream.c (read_stream): Don't bomb out when our syscalls are
+	interrupted by signal, instead just come back later and carry on.
+	* src/display.c (should_quit): Rename to handle_keys, return < 0
+	when should quit, > 0 on any other key.  Handle the KEY_RESIZE
+	event by clearing the board.
+	* src/display.h: Update.
+	* src/main.c (main): Call handle_keys function rather than
+	should_quit.
+
+2005-10-09  Scott James Remnant  <scott@netsplit.com>
+
+	* src/stream.c (read_stream): Re-work after reading the book on
+	poll(), always use read() and write() to get the actual socket errors
+	rather than trying to divine them from poll's erratic return events.
+	* src/main.c (main): Close the socket before reconnecting now that
+	read_stream() doesn't for us.
+
+	* src/packet.h (RaceAtomType): The inter-sector columns actually
+	tell us which lap they went into the pits, and the sector time
+	becomes the time in the pits.
+	* src/display.c (_update_cell): Update enum values.
+
+2005-10-08  Scott James Remnant  <scott@netsplit.com>
+
+	* src/packet.h: Fix comment for PracticeAtomType.
+
+	* README: Update description of the zero key frame, which I'm
+	convinced is something to do with a data-stream-less mode of the Java
+	applet.
+
+	* src/main.c (main): Add a message when we reconnect.
+
+	* src/packet.c (handle_car_packet): During race events, the Interval
+	column of the car in P1 contains the lap number -- parse this to get
+	the current lap and store it in the state.
+
+	* src/live-f1.h (EventType): Qualifying has an event type of 4,
+	I guess 3 was used for the old Q1/Q2 system.
+	* src/display.c (clear_board): Use the same headers for qualifying
+	as we do for practice.
+	(_update_cell): Therefore also use the same column settings.
+	(update_status): Show Qualifying during those events.
+
+	* src/main.c (main): No need to close the socket, read_stream()
+	always does before returning.  Fix memset to ensure we zero the
+	entire state array.
+	* src/packet.c (handle_car_packet): Abort if we can't realloc the
+	arrays.
+
+	* configure.ac: Check for standard headers and getopt.h, also
+	check for const and size_t.
+	* src/main.c (main): Handle command-line options, and set the default
+	verbosity to zero.
+	(print_usage): Outputs usage instructions.
+	* src/http.c (obtain_key_frame): Adjust message when receiving
+	key frame zero.
+
+	* src/display.c (should_quit): Remove argument, we're always
+	called in a non-waiting mode now.
+	* src/display.h: Update.
+	* src/stream.c (open_stream): Don't print the reason for failure,
+	just return it.
+	* src/main.c (main): Remove argument from should_quit() call.
+	Close socket before going around the loop again.  Close display
+	and print error when we can't open the data stream.  Check for
+	errors from read_stream() and close display then print the error
+	if one occurs.
+
+	* src/packet.c (handle_system_packet): Close any popup once the
+	countdown begins.
+
+	* src/main.c (main): Loop through the process of opening the stream
+	and reading from it forever, or at least until the user presses a
+	key.  That way we handle the server disconnecting us and go back in
+	again to begin a new session.
+
+	* src/live-f1.h (CurrentState): Instead of storing the end_time,
+	which we can never really know; store the remaining time and when
+	that was last updated.  epoch_time will be 0 until we begin counting.
+	* src/packet.c (handle_system_packet): Update fields accordingly,
+	and make sure we reset the times when we learn of a new event.
+	* src/display.c (_update_time): Calculate the remaining time by
+	adding the epoch_time and remaining_time together, unless epoch_time
+	is zero in which case it's always the reminaing time.
+
+	* src/live-f1.h (CurrentState): Add a field to store the end time
+	of the current session.
+	* src/packet.c (handle_system_packet): Handle the SYS_WEATHER packet
+	when the data is 0, and use it to work out the end time of the
+	session.  Update the time on the display when done.
+	* src/display.c (clear_board): Go back to a hard-coded minimum of
+	20 lines, as that's what we'll need for the status window anyway.
+	Adjust the flag colours to match change in way of displaying.
+	(update_status): Increase the width of the status window by one
+	cell, we'll also go right up to the edges.  When not in a race,
+	output the type of session; both that and the lap counter are in
+	the flag colour (green, yellow, red).  If there's any message for
+	the flag, output that on the line below and use longer forms.
+	(_update_time): Redraw the bit of the status window that shows the
+	remaining time until the session ends.
+	(update_cell): Update the time.
+	(update_car): Update the time.
+	(clear_car): Update the time.
+	(update_time): External function to update the time.
+	* src/display.h: Update.
+	* src/stream.c (read_stream): Update the time if we ping the server,
+	so we don't ever go too long without doing it.
+
+2005-10-07  Scott James Remnant  <scott@netsplit.com>
+
+	* src/display.c (open_display): Add colours for displaying the
+	various track status flags, use reverse video to make them obvious.
+	(update_status): Create the status window if necessary then update
+	it from the state structure.  Currently outputs the lap number
+	during a race (which is always zero currently), and the flag.
+	(clear_board): Delete and update from scratch the status window,
+	as we've almost certainly changed our size.
+	(close_popup): Redraw the status window if it exists.
+
+	* src/display.h: Update.
+	* src/packet.c (handle_system_packet): Update the status window
+	when the flag changes.
+
+	* src/packet.h (SystemPacketType): Type 10 contains textual speed
+	data for all of the drivers.  Type 4 contains the text commentary
+	for the event.  Type 9 contains the weather information, numerically
+	with data to tell us what to change.  Type 7 seems to be some kind
+	of timestamp related to the weather, a 16-bit le int which is mixed
+	in with the weather data to provide history.  Drop the two "special"
+	type names, I still don't know what these are for.
+	* src/stream.c (next_packet): Update to use new type names; drop the
+	handling of the special types and let them fall back to unknown.
+
+	* src/stream.c (open_stream): Decrease the irrelevance of the
+	"Connected to" message.
+
+	* src/live-f1.h (EventType): Practice sessions seem to carry an
+	event type of 2.
+	* src/packet.h (CarPacketType): Remove all the atom names from this
+	enum and instead just record the event types.
+	(RaceAtomType): Put the descriptions of each race atom type here.
+	* src/packet.c (handle_car_packet): Handle atom types in the default
+	block, we know that these always are.  Avoid ugly switch style.
+	(handle_system_packet): Avoid ugly switch style.
+	* src/stream.c (next_packet): Handle atom types in the default block.
+	* src/display.c (clear_board): Change the header depending on the
+	event type.
+	(update_cell): Take int rather than CarPacketType as we don't know
+	which atom type we have until we look at state.
+	(_update_cell): Take int rather than CarPacketType as well, switch
+	on the event type before looking at the atom type.
+	* src/display.h: Update,
+
+	* src/main.c (main): Allocate the state structure rather than using
+	a copy on the stack, just makes things a little more consistent.
+
+	* src/http.c (obtain_key_frame): Use MAX not MIN when calculating
+	the length of the string we need for the URL; otherwise we go the
+	wrong way and don't make enough memory.  When the key frame request
+	fails, make sure we also free the neon session.
+	* src/stream.c (open_stream): Make sure we don't leave without
+	freeing the addrinfo results.
+
+	* src/http.c (obtain_auth_cookie): Remove hard-coding of my
+	authentication cookie now we can look it up using the user's
+	real details.
+	(obtain_decryption_key): Remove hard-coding of the Brazil 2005
+	decryption key.
+
+	* src/display.c (clear_board): Calculate the number of lines we need
+	by finding the highest position, not just using the number of cars.
+	Use the new nlines variable and don't hard-code the minimum number
+	of cars, but use a macro.
+	(_update_cell): If we don't have enough lines for the row, clear the
+	board and resize it.
+	(close_popup): Set popupwin to NULL.
+
+	* src/cfgfile.c (read_config): Fix bug with empty lines and
+	comments, adding back missing continue line.
+
+2005-10-06  Scott James Remnant  <scott@netsplit.com>
+
+	* src/http.c (obtain_auth_cookie): Add host parameter to avoid
+	hard-coding the site hostname.
+	(obtain_decryption_key): Add host parameter.
+	(obtain_key_frame): Add host parameter.
+	* src/http.h: Update.
+	* src/packet.c (handle_system_packet): Pass in hostname when
+	obtaining decryption key and key frame.
+	* src/live-f1.h (DEFAULT_HOST): Add macro for default host.
+	(CurrentState): Add host, email and password configuration.
+	* src/cfgfile.c (read_config): Reads the configuration file
+	and stores the settings in the state structure.
+	(fgets_alloc): Drop in my standard fgets_alloc function.
+	(write_config): Write configuration file using values stored
+	in the state structure.
+	(get_config): Prompt the user for settings and store in state.
+	* src/main.c (main): Read the configuration file, if it doesn't
+	exist, get the configuration from the user and write it out.
+	Use configuration values rather than hard-coded settings; removed
+	some needless prints.
+	* src/Makefile.am (live_f1_SOURCES): Add cfgfile.c and cfgfile.h.
+
+	* src/packet.c (handle_car_packet): Fix bug with POSITION_UPDATE
+	handling, car_position is a zero-based array so we have to clear
+	from zero to num_cars-1, not 1 to num-cars ... was cauing the
+	remaining failure to restore lines.
+	* src/stream.c (read_stream): Remove the "Sending ping..." debug
+	statement, as it just fills the screen.
+
+	* src/packet.h (SystemPacketType): System type 14 appears to be
+	the flag/track status.
+	* src/live-f1.h (FlagStatus): Enum for track status/flag.
+	(CurrentState): add flag property.
+	* src/packet.c (handle_system_packet): Handled the SYS_TRACK_STATUS
+	when the data field is 1 by saving the flag in the state struct.
+	* src/stream.c (open_stream): Fix typo in error.
+	(next_packet): Handle SYS_TRACK_STATUS instead of UNKNOWN_SHORT_B.
+
+	* src/display.c (should_quit): Take a flag to say whether we
+	should wait for the keypress, or just check for one already made.
+	(close_display): Don't wait for a key.
+	* src/display.h: Update.
+	* src/main.c (main): Don't wait for keys in the main loop, but do
+	wait for a key before exiting.
+
+2005-10-03  Scott James Remnant  <scott@netsplit.com>
+
+	* src/display.c (clear_board): Bail out if we end up on a display
+	that's too small for us.
+	(_update_cell): Always write spaces in the default colour, to let
+	us play with colours a bit more if we want.
+
+	* src/packet.h (CarPacketType): The three inter-sector unknowns
+	appear to be the lap the car stopped (if between S1 and S2),
+	the lap the car entered the pits and the lap the car left the pits;
+	I assume these have some meaning, so we may as well display them.
+	* src/packet.c (handle_car_packet): Handle the new CAR_LAP_STOP,
+	CAR_LAP_IN_PIT and CAR_LAP_OUT packets as ordinary atoms.
+	* src/display.c (clear_board): Add 4 columns to each sector header
+	and left-align them.  Decrease the pit count by one to claw back
+	some space.  Increase the window height if we have more than 20
+	drivers, but always allocate at least that.
+	(_update_cell): Add the new atom types, adjust the positions of
+	the following columns to match, decrease pits to two characters
+	and right-align.
+	* src/stream.c (next_packet): Use the new names for the unknowns.
+
+	* src/display.c (_update_cell): Add an alignment option to each
+	field, either left (-1) or right (1).  Use this when outputting
+	the text to line things up.
+
+	* src/display.c (update_car): Updates an entire row of car
+	information, used when cars change positions, etc.
+	(update_cell): Take out the bulk of the real code from here,
+	(cell_info): and from here (removing this func), and put all of it in
+	(_update_cell): which does the work but doesn't update the screen;
+	also uses the car's position as the row now.
+	(clear_board): Actually draw any board information, as promised.
+	(clear_car): Clear a car from the board completely.
+	(close_display): Wait for a key press before returning to normality.
+	* src/display.h: Update.
+	* src/packet.c (handle_car_packet): Set the car position array entry
+	to zero after allocating it, also set more than the first atom to
+	zero too.  Handle the CAR_POSITION_UPDATE packet by clearing the row,
+	moving any car out of the new position and setting the new position
+	of this car; finally redraw the row if non-zero.
+	* src/stream.c (next_packet): Be more specific about which
+	packets we expect to have a length, and explicitly don't
+	handle the ones we don't know about.
+	* src/main.c (print_version): Delete the word "the" from the
+	version output.
+	* src/Makefile.am (live_f1_SOURCES): Add missing macros.h and
+	gettext.h
+
+	* src/main.c (print_version): Prints out the standard name,
+	version, copyright and licence preamble.
+	(main): Print the version every time we start, like a well
+	behaved GNU program.
+
+2005-10-02  Scott James Remnant  <scott@netsplit.com>
+
+	* src/stream.c (SHORT_PACKET_LEN): If the short packet length is
+	0xf0, treat it as -1 and not 0; as 0 is another discreet value.
+	(next_packet): Fix to cope with packet->len being -1, actually
+	makes it a little more efficient for special packets.
+	* src/packet.c (handle_car_packet): Empty the text of the atom
+	if the packet length is zero, keep it if -1.
+
+	* src/live-f1.h (CurrentState): Add fields for current lap,
+	number of cars, position of each car and the last colour and text
+	received for each event type.
+	(CarAtom): Structure to pair the colour and text for each cell.
+	* src/packet.c (handle_car_packet): When a car event comes in,
+	check we have room for it, and if not expand our information arrays
+	to compensate.  If it's one with an associated atom, copy the data
+	into it overwriting anything there before (except text if none
+	came in the event) and update the cell on the board.
+	(handle_system_packet): Reset the lap counter, number of cars and
+	car information when a new event starts.
+	* src/packet.h (CarPacketType): Add the set of packet types for
+	a race, still a handful that I don't know what they're for.
+	Add LAST_CAR_PACKET for counting.
+	(SystemPacketType): Rename SYS_UNKNOWN_LONG_C to B for clarity;
+	add LAST_SYSTEM_PACKET for counting.
+	* src/display.c (open_display): Brock no delay when peeking for
+	key presses.
+	(close_display): Don't bother waiting for a key if a popup is open,
+	just quit.
+	(clear_board): Don't draw a box around the board, and instead of
+	filling it with junk, output proper headers (for race) and the
+	current information from the state structure.
+	(should_quit): Function to check the keyboard to see whether the user
+	is trying to quit.
+	(cell_info): One shot function to convert an atom of information
+	into a screen position, attributes and text.
+	(update_cell): Updates an individual cell on the board, opening the
+	display if necessary and updating it when done.
+	(popup_message): Change to not be unsigned, no point.
+	* src/display.h: Update.
+	* src/main.c (main): Quit if the user presses the right key.
+	Close the socket on our way out, just to be tidy.  After clearing
+	the state structure, set the pointers to NULL to be safe.
+	(info): Update to not pass unsigned stuff to info, use sizeof for
+	message buffer.	
+
+	* src/display.c (attrs): Make static.
+	* src/display.h: Add missing newline between vars and functions.
+	* src/live-f1.h: Add missing newline between vars and functions.
+	* src/packet.c: Correct doc for event_id
+
+	* src/display.c (open_display): Sets up the curses display,
+	allocates colours, etc.
+	(close_display): Tears down the curses environment again.
+	(clear_board): Place holder function, will be used to clear the
+	board at the start of an event; for now just schedules a window
+	update with some cruft in it.
+	(popup_message): Displays a popup message in front of everything
+	else on the screen, with some evil window hackery.
+	(close_popup): Takes the popup away again and makes sure it'll
+	really vanish at the next update.
+	* src/stream.c (next_packet): Null-terminate the payload for free
+	to make dealing with strings marginally less painful.
+	* src/stream.h: Fix bogus prototypes.
+	* configure.ac: Add check for ncurses library.
+	* src/display.h: Header file.
+	* src/main.c (main): Close curses display on shutdown.
+	(info): use popup_message when curses is running.
+	* src/packet.c (handle_system_packet): Clear the board at the
+	start of an event (opening curses display).  Take away the
+	null-terminate code now they always are.
+	* src/Makefile.am (live_f1_SOURCES): Add display.c and display.h.
+
+2005-10-01  Scott James Remnant  <scott@netsplit.com>
+
+	* src/packet.c (handle_system_packet): Add handling for
+	SYS_COPYRIGHT and new SYS_NOTICE packets.
+	
+	* src/packet.c (handle_car_packet): Change packet parameter to
+	a Packet structure rather than binary data.
+	(handle_system_packet): Likewise and adjust code to match.
+	* src/packet.h (Packet): Add a packet structure to hold a decoded
+	packet and copy that about rather than binary evilness.  Update
+	prototypes for functions.  Move macros back into src/stream.c now
+	we don't move binary stuff around.
+	* src/stream.c (next_packet): Rework to fill in a Packet structure
+	as we go, and have it filled from the buffer when the entire packet
+	is in there.  That way nothing passed this has to worry about
+	whether an event was long, short, special or just down-right stupid.
+	(parse_stream_block): Use a Packet struct on the stack to pass
+	to next_packet and down to the handler functions.
+
+	* README: Document the basics of encryption.
+
+	* src/live-f1.h (CurrentState): Add the decryption salt to the
+	state structure.
+	* src/stream.c (reset_decryption): Add function to reset the
+	decryption salt to the initial seed.
+	(decrypt_bytes): Add the actual decryption algorithm.
+	(next_packet): Record for each event type whether it needs
+	decrypting or not, and decrypt it if it does.
+	* src/stream.h: Update.
+	* src/main.c (main): Set the decryption salt after clearing the
+	state structure.
+	* src/packet.c (handle_system_packet): Reset the decryption salt
+	when receiving a key frame packet and after obtaining the key frame.
+	(handle_system_packet): Reset the decryption salt after changing
+	the key.
+
+	* src/live-f1.h (CurrentState): Remove http session stuff from
+	CurrentState, because we actually can't make multiple requests
+	on the same session so will need a new one each time anyway.
+	Also remove data_sock, it's not needed.
+	(EventType): Add enum for possible event types.
+	* src/main.c (main): Store the socket in an old-fashioned int
+	and pass to read_stream again.  Drop session creation.
+	* src/stream.c (read_stream): Take sock again.
+	* src/stream.h: Update.
+	* src/http.c (obtain_auth_cookie): Remove http_sess parameter and
+	instead set it up and tear it down in the function.
+	(obtain_decryption_key): Likewise.
+	(obtain_key_frame): Likewise.
+	* src/http.h: Update.
+	* src/packet.c (handle_system_packet): No longer pass session to
+	obtain_decryption_key() or obtain_key_frame().  Store event number
+	and type in the state struct.
+
+	* src/live-f1.h (CurrentState): Add a structure that we can
+	pass around with our state rather than using globals or other
+	evil things.
+	* src/main.c (main): Rework to setup the CurrentState struct
+	and pass it about.
+	* src/packet.c (handle_car_packet): Add a stub function for 
+	handling car-related packets when we get around to it.
+	(handle_system_packet): Add a function for handling system
+	packets, and handle the SYS_EVENT_ID and SYS_KEY_FRAME ones.
+	* src/stream.c (parse_stream_block): Make a copy of the packet
+	on the stack so we can be recursive and hand the packet off to
+	either handle_car_packet() or handle_system_packet().
+	(read_stream): Modify to just take CurrentState pointer.
+	(parse_stream_block): Modify to take CurrentState pointer
+	instead of ne_session pointer.
+
+	* src/packet.h (CarPacketType, SystemPacketType): Move enums
+	and related macros into new header.  Add function prototypes.
+	* src/Makefile.am (live_f1_SOURCES): Add packet.c and packet.h.
+
+	* src/stream.c (parse_stream_block): Rename len parameter to
+	buf_len to be more clear, iterate over the packets in the buffer
+	using a static array so we can survive packets happening across
+	boundaries.
+	(next_packet): Take the next packet off the buffer and add it to
+	parse_stream_block()s static buffer until we have a full-sized
+	event that can be processed.
+	(PACKET_CAR, PACKET_TYPE): Macros to retrive the car index and
+	packet type from the header.
+	(SHORT_PACKET_DATA, SPECIAL_PACKET_DATA): Macros to retrieve any
+	data that can be hidden in the spare space of the packet header.
+	(SHORT_PACKET_NUL): Macro to check whether the short packet really
+	has data or not.
+	(LONG_PACKET_LEN, SHORT_PACKET_LEN, SPECIAL_PACKET_LEN): Macros
+	to return the expected size of the full packet depending on
+	type.
+	(CarPacketType): enum of packet types discovered so far that are
+	related to cars.
+	(SystemPacketType): enum of packet types discovered so far that
+	aren't related to cars, shares the same type space though.
+	* src/stream.h: Update.
+	* README: Update with information on the data stream format.
+
+	* src/stream.c (read_stream): Poll the data stream file descriptor
+	and deal with events, if after one second we haven't got any data
+	from it, send it a ping to see whether that wakes it up.
+	(parse_stream_block): Take an http_sess for obtaining key frames
+	when we need to.
+	(open_stream): Iterate the available addresses until we find one
+	that works.
+	* src/stream.h: Update.
+	* src/http.c (obtain_key_frame): Pass our own session to
+	parse_stream_block() in case it needs to get more key frames.
+	Close the connection when done so we don't keep the server
+	hanging.
+
+	* src/stream.c (open_stream): Lookup the hostname in a hopefully
+	protocol-independant manner and connect to the data stream port.
+	* src/stream.h: Update.
+	* src/main.c (main): Open the data stream socket.
+
+	* src/main.c (main): Use localhost for the key frame data.
+	* src/http.c (obtain_key_frame): Ensure a minimum of five digits
+	for the key frame number by zero-padding.
+	* README: Document key frames and what they mean to us.
+
+	* src/main.c (info): Add function for easy printing.
+	* src/http.c (obtain_decryption_key): Drop this function entirely.
+	(obtain_cookie): Change from static to extern, it's useful to
+	get the cookie early and keep it around.  Rename to
+	obtain_auth_cookie.
+	(obtain_key): Change from static to extern and change to directly
+	return the key, we'll use 0 for a failure as that's also what'll
+	happen on 404, etc. anyway.  Rename to obtain_decryption_key.
+	(obtain_key_frame): Make a request for a key frame and hand parsing
+	off to parse_stream_block().
+	* src/http.h: Update.
+	* src/main.c (main): Move session creation and teardown to here.
+	* src/stream.c (parse_stream_block): Add stub function.
+	* src/stream.h: Associated header file.
+	* src/Makefile.am (live_f1_SOURCES): Add stream.c and stream.h.
+
+	* src/http.c (obtain_decryption_key): Create a neon session and
+	call obtain_cookie() and obtain_key() to do the necessary magic
+	to obtain the decryption key for a race.
+	(obtain_cookie): Perform a login request on the website to obtain
+	the authorisation cookie.
+	(parse_cookie_hdr): Parse the set-cookie header for the request
+	to obtain it.
+	(numlen): Inline to calculate the length of a number for sprintf.
+	(obtain_key): Send the request to obtain the decryption key for
+	a session giving the authorisation key as credentials to have it.
+	(parse_key_body): Parse the body of the key request, storing
+	hexadecimal digits in the key until we run out.
+	* src/main.c (main): Initialise gettext and neon, stash the program
+	name, also include some debugging code for now.
+	* src/live-f1.h: Add main header file to declare generally useful
+	things like program_name and gettext macros.
+	* src/macros.h: Copy from my template.
+	* src/gettext.h: Copy from gettext distribution.
+	* src/Makefile.am (live_f1_SOURCES): Add htp.c, http.h and
+	live-f1.h
+	(AM_CPPFLAGS): Replace INCLUDES and DEFS with single modern variable.
+	(LDADD): Added NEON_LIBS.
+	* README: Document the technique for obtaining the decryption key.
+
+	* configure.ac: Add check for neon using pkg-config. Remove a
+	couple of bits left over from my template.
+
+	* ChangeLog: Initial project infrastructure created.
+
