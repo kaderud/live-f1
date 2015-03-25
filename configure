@@ -576,9 +576,10 @@ SHELL=${CONFIG_SHELL-/bin/sh}
 # Identity of this package.
 PACKAGE_NAME='live-f1'
 PACKAGE_TARNAME='live-f1'
-PACKAGE_VERSION='0.2.11'
-PACKAGE_STRING='live-f1 0.2.11'
-PACKAGE_BUGREPORT='https://bugs.launchpad.net/live-f1'
+PACKAGE_VERSION='0.2.12'
+PACKAGE_STRING='live-f1 0.2.12'
+#PACKAGE_BUGREPORT='https://bugs.launchpad.net/live-f1'
+PACKAGE_BUGREPORT='https://github.com/kaderud/live-f1/issues'
 
 ac_unique_file="src/main.c"
 # Factoring default headers for most tests.
