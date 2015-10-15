@@ -1,6 +1,8 @@
 # live-f1
 live-f1 is a native Linux client for viewing the official Formula-1 "Live Timing" stream.
 
+[![Build Status](https://travis-ci.org/kaderud/live-f1.svg?branch=master)](https://travis-ci.org/kaderud/live-f1)
+
 The official Formula-1 website includes a Java client which during
 races, qualifying and practice sessions displays the live timing
 information from the track side.
