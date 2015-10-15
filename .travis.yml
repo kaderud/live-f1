@@ -5,7 +5,7 @@ compiler:
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y libneon25-dev
+  - sudo apt-get install -y libneon27-dev libncurses5-dev
 
 script:
  - ./configure && make && make test
