@@ -1,3 +1,5 @@
+**[2020-01-01 DEPRECATED - This project no longer works as Formula 1 has changed the live timing parts]**
+
 # live-f1
 live-f1 is a native Linux client for viewing the official Formula-1 "Live Timing" stream.
 
